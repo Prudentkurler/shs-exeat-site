@@ -1,6 +1,5 @@
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { Badge } from '@/components/ui/badge'
 import React from 'react'
 import { BadgeCheck, LogIn, TrendingUp } from 'lucide-react' // Using lucide-react icons for visuals
 import { Separator } from '@/components/ui/separator'
@@ -118,7 +117,7 @@ const Page = () => {
             <BadgeCheck className='h-10 w-10 text-blue-500' />
             <h3 className='mt-4 text-lg font-semibold'>Track Records</h3>
             <p className='text-center text-gray-600'>
-              Monitor students' sign-in and sign-out records effortlessly.
+              Monitor students sign-in and sign-out records effortlessly.
             </p>
           </div>
           {/* Benefit 2 */}
@@ -149,21 +148,21 @@ const Page = () => {
           {/* Testimonial 1 */}
           <div className='bg-white p-6 shadow-md rounded-lg max-w-sm'>
             <p className='text-gray-600 italic'>
-              "This platform has made managing attendance and payments so much easier. It's intuitive and efficient!"
+              &quotThis platform has made managing attendance and payments so much easier. It's intuitive and efficient!&ldquo
             </p>
             <p className='mt-4 font-bold text-blue-500'>– Jane Doe, Student</p>
           </div>
           {/* Testimonial 2 */}
           <div className='bg-white p-6 shadow-md rounded-lg max-w-sm'>
             <p className='text-gray-600 italic'>
-              "The real-time sign-in/out history is a game-changer for our school. Highly recommend it!"
+              The real-time sign-in/out history is a game-changer for our school. Highly recommend it!
             </p>
             <p className='mt-4 font-bold text-blue-500'>– Mr. Smith, Administrator</p>
           </div>
           {/* Testimonial 3 */}
           <div className='bg-white p-6 shadow-md rounded-lg max-w-sm'>
             <p className='text-gray-600 italic'>
-              "Being able to track revenue and attendance in one place has been incredibly helpful for our admin team."
+              Being able to track revenue and attendance in one place has been incredibly helpful for our admin team.
             </p>
             <p className='mt-4 font-bold text-blue-500'>– Dr. Johnson, Principal</p>
           </div>
