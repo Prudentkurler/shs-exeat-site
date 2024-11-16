@@ -148,7 +148,7 @@ const Page = () => {
           {/* Testimonial 1 */}
           <div className='bg-white p-6 shadow-md rounded-lg max-w-sm'>
             <p className='text-gray-600 italic'>
-              &quotThis platform has made managing attendance and payments so much easier. It's intuitive and efficient!&ldquo
+              &quotThis platform has made managing attendance and payments so much easier. Its intuitive and efficient!&ldquo
             </p>
             <p className='mt-4 font-bold text-blue-500'>– Jane Doe, Student</p>
           </div>
