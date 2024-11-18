@@ -13,6 +13,8 @@ import {
   SidebarMenuSubButton,
   SidebarMenuSubItem,
 } from "@/components/ui/sidebar"
+import { title } from "process";
+import { url } from "inspector";
 
 
 // This is sample data.
@@ -75,6 +77,12 @@ const data: { navMain: NavItem[] } = {
       url:'/dashboard/password-management',
       items:null,
       icon:<Key/>
+    },
+    {
+      title:'Logout',
+      url:'/',
+      items:null,
+      icon:<XCircle/>
     }
   
   ],
