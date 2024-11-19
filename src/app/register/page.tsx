@@ -12,7 +12,7 @@ import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
-import { Loader2 } from "lucide-react"; // Spinner icon
+import { Link, Loader2 } from "lucide-react"; // Spinner icon
 import { motion } from "framer-motion";
 
 const Register = () => {
@@ -213,6 +213,7 @@ const Register = () => {
                   )}
                 </Button>
               ) : (
+                
                 <Button
                   type="submit"
                   variant="default"
@@ -224,6 +225,7 @@ const Register = () => {
                     "Submit"
                   )}
                 </Button>
+               
               )}
             </motion.div>
           </form>

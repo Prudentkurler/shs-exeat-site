@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { motion } from "framer-motion";
+import Link from "next/link";
 
 const CreateLoginPage: React.FC = () => {
   const [formValues, setFormValues] = useState({
@@ -124,12 +125,14 @@ const CreateLoginPage: React.FC = () => {
 
               {/* Submit Button */}
               <motion.div whileHover={{ scale: 1.05 }} transition={{ type: "spring", stiffness: 200 }}>
+                <Link href="/login/school-site">
                 <Button
                   type="submit"
                   className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-lg shadow-md text-lg font-medium transition duration-200"
                 >
                   Create Login
                 </Button>
+                </Link>
               </motion.div>
             </form>
           </CardContent>

@@ -4,6 +4,7 @@ import React from 'react'
 import { BadgeCheck, LogIn, TrendingUp } from 'lucide-react' // Using lucide-react icons for visuals
 import { Separator } from '@/components/ui/separator'
 import Footer from '@/components/comps/footer'
+import Link from 'next/link'
 
 const Page = () => {
   return (
@@ -16,6 +17,7 @@ const Page = () => {
         <p className="mt-3 text-base md:text-lg text-white/90">
           Simplify the way schools and parents track attendance and manage exits.
         </p>
+        <Link href='/register'>
         <Button
           variant="default"
           size="lg"
@@ -23,6 +25,7 @@ const Page = () => {
         >
           Get Started
         </Button>
+        </Link>
       </div>
 
       {/* Features Section */}

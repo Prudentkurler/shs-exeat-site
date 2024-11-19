@@ -1,4 +1,5 @@
 "use client"
+import { LayoutDashboard } from 'lucide-react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import React from 'react'
@@ -26,6 +27,7 @@ const NavBar = () => {
             <Link href='/support'>Support</Link>
             <Link href='/faqs'>FAQs</Link>
             <Link href='/login'>Login</Link>
+            <Link href='/dashboard'><LayoutDashboard/></Link>
         </div>
     </div>
       )
