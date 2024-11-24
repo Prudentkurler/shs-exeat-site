@@ -32,6 +32,7 @@ export default function TotalStudentsPage() {
   return (
 
     <SidebarProvider
+    className="w-full"
     style={
       {
         "--sidebar-width": "19rem",
@@ -56,15 +57,15 @@ export default function TotalStudentsPage() {
         </Breadcrumb>
       </header>
 
-    <div className="p-4 space-y-6">
+    <div className="md:p-4 space-y-6 w-full">
       {/* Header Section */}
       <motion.div
         initial={{ opacity: 0, y: -50 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
-        className="grid gap-4 md:grid-cols-3"
+        className="flex flex-col md:flex-row gap-3 p-3 items-center w-full"
       >
-        <Card className="shadow-md hover:shadow-lg transition">
+        <Card className=" w-full ">
           <CardHeader>
             <CardTitle>Total Students</CardTitle>
           </CardHeader>
@@ -72,7 +73,7 @@ export default function TotalStudentsPage() {
             <h2 className="text-2xl font-bold text-gray-800">120</h2>
           </CardContent>
         </Card>
-        <Card className="shadow-md hover:shadow-lg transition">
+        <Card className="w-full">
           <CardHeader>
             <CardTitle>Signed In</CardTitle>
           </CardHeader>
@@ -80,7 +81,7 @@ export default function TotalStudentsPage() {
             <h2 className="text-2xl font-bold text-gray-800">80</h2>
           </CardContent>
         </Card>
-        <Card className="shadow-md hover:shadow-lg transition">
+        <Card className="w-full">
           <CardHeader>
             <CardTitle>Signed Out</CardTitle>
           </CardHeader>
@@ -97,7 +98,7 @@ export default function TotalStudentsPage() {
         initial={{ opacity: 0, y: 50 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
-        className="grid gap-4 md:grid-cols-2"
+        className="flex flex-col md:flex-row gap-4 items-center p-3"
       >
         <PieChart data={pieChartData} title="Sign-in vs Sign-out" />
         <BarChart data={barChartData} title="Students by Program" />
@@ -110,7 +111,7 @@ export default function TotalStudentsPage() {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.5 }}
-        className="rounded-xl bg-white p-4 shadow-md"
+        className="rounded-xl bg-white p-4 shadow-md w-full"
       >
         <Card>
           <CardHeader>

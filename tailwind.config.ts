@@ -10,7 +10,13 @@ export default {
   theme: {
   	extend: {
   		colors: {
+			backgroundImage:{
+				'homeHero':"url('/Images/homeHero.jpg')",
+				'aboutHero':"url('/Images/aboutHero.jpg')"
+			},
   			background: 'hsl(var(--background))',
+			first:'#4567b7',
+			second:'#ffc107',
   			foreground: 'hsl(var(--foreground))',
   			card: {
   				DEFAULT: 'hsl(var(--card))',

@@ -9,7 +9,7 @@ interface PieChartProps {
 
 export const PieChart = ({ data, title = "Pie Chart" }: PieChartProps) => {
   return (
-    <Card className="shadow-md hover:shadow-lg transition">
+    <Card className="w-full">
       <CardHeader>
         <CardTitle>{title}</CardTitle>
       </CardHeader>

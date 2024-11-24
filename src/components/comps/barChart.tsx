@@ -9,7 +9,7 @@ interface BarChartProps {
 
 export const BarChart = ({ data, title = "Bar Chart" }: BarChartProps) => {
   return (
-    <Card className="shadow-md hover:shadow-lg transition">
+    <Card className="w-full">
       <CardHeader>
         <CardTitle>{title}</CardTitle>
       </CardHeader>
