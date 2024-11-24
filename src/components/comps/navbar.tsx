@@ -104,7 +104,7 @@ const NavBar = () => {
                 </Link>
                 <Link href="/dashboard" onClick={toggleMenu}>
                   <div className="flex items-center gap-2">
-                    <LayoutDashboard /> Dashboard
+                    <LayoutDashboard /> 
                   </div>
                 </Link>
         </div>
