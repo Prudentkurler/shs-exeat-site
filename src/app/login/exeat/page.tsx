@@ -7,6 +7,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { motion } from "framer-motion";
+import Image from "next/image";
 
 const ExeatPage: React.FC = () => {
   const [currentSection, setCurrentSection] = useState("welcome");
@@ -44,16 +45,18 @@ const ExeatPage: React.FC = () => {
       {/* Header Section */}
       <header className="w-full max-w-5xl mb-10">
         <div
-          className="flex items-center justify-between bg-[#4567b7] text-white rounded-lg px-6 py-4 shadow-md"
+          className="flex items-center justify-between bg-gray-200 text-white rounded-lg px-6 py-4 shadow-md"
         >
           <div>
-            <h1 className="text-2xl font-bold">Welcome, [Student Name]</h1>
+            <h1 className="text-2xl font-bold text-first">Welcome, Gal Gaddot</h1>
             <p className="text-sm text-gray-200">Manage your activities seamlessly</p>
           </div>
-          <img
-            src="/placeholder-profile.png"
+          <Image
+            src="/Images/lady.jpg"
             alt="Student Photo"
-            className="w-16 h-16 rounded-full border-2 border-white"
+            className="w-20 h-20 rounded-full border-2 border-white"
+            width={60}
+            height={60}
           />
         </div>
       </header>
@@ -66,14 +69,14 @@ const ExeatPage: React.FC = () => {
             whileHover={{ scale: 1.05 }}
             onClick={() => setCurrentSection("payment")}
           >
-            Payment Section
+            Make Payment
           </motion.div>
           <motion.div
             className="flex items-center justify-center bg-[#ffc107] text-gray-800 font-bold text-lg h-24 rounded-lg shadow-lg cursor-pointer transition-transform hover:scale-105"
             whileHover={{ scale: 1.05 }}
             onClick={() => setCurrentSection("message")}
           >
-            Message Section
+            Leave a message
           </motion.div>
         </div>
       </section>
@@ -90,7 +93,7 @@ const ExeatPage: React.FC = () => {
             <CardHeader
               className="bg-[#4567b7] text-white py-4 rounded-t-lg"
             >
-              <CardTitle className="text-lg font-bold">Payment Section</CardTitle>
+              <CardTitle className="text-lg font-bold">Make payment</CardTitle>
             </CardHeader>
             <CardContent className="p-6">
               <h2 className="text-gray-700 text-lg font-medium mb-3">Pay Charge Fee</h2>
@@ -122,7 +125,7 @@ const ExeatPage: React.FC = () => {
             <CardHeader
               className="bg-[#ffc107] text-gray-800 py-4 rounded-t-lg"
             >
-              <CardTitle className="text-lg font-bold">Message Section</CardTitle>
+              <CardTitle className="text-lg font-bold">Leavr a message</CardTitle>
             </CardHeader>
             <CardContent className="p-6">
               <h2 className="text-gray-700 text-lg font-medium mb-3">Contact School</h2>

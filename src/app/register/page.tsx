@@ -1,5 +1,6 @@
 "use client";
 import { useState } from "react";
+import { useRouter } from "next/navigation"; // Import useRouter
 import {
   Select,
   SelectTrigger,
@@ -14,24 +15,37 @@ import { Card } from "@/components/ui/card";
 import { Breadcrumb } from "@/components/ui/breadcrumb"; // Breadcrumb component
 import { Loader2, Home, LogIn } from "lucide-react"; // Icons
 import { motion } from "framer-motion";
+import Link from "next/link";
 
 const Register = () => {
   const [step, setStep] = useState(1);
   const [submitting, setSubmitting] = useState(false);
+  const router = useRouter(); // Initialize the router
 
-  const nextStep = () => setStep((prev) => Math.min(prev + 1, 4)); // Max 4 steps
-  const prevStep = () => setStep((prev) => Math.max(prev - 1, 1));
+  const nextStep = (e: React.MouseEvent) => {
+    e.preventDefault(); // Prevent form submission
+    setStep((prev) => Math.min(prev + 1, 4)); // Increment step (max 4)
+  };
+
+  const prevStep = (e: React.MouseEvent) => {
+    e.preventDefault(); // Prevent form submission
+    setStep((prev) => Math.max(prev - 1, 1)); // Decrement step (min 1)
+  };
+
   const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    setSubmitting(true);
+    e.preventDefault(); // Prevent default form submission
+    setSubmitting(true); // Start submission process
+
+    // Simulate an API call or form processing delay
     setTimeout(() => {
-      setSubmitting(false);
-      alert("Registration completed!");
-    }, 2000); // Simulate form submission
+      setSubmitting(false); // End submission process
+      alert("Registration completed!"); // Show alert
+      router.push("/login/exeat"); // Navigate to the login page
+    }, 2000);
   };
 
   return (
-    <div className="w-full min-h-screen bg-gradient-to-br from-purple-500 via-blue-500 to-green-500 flex justify-center items-center">
+    <div className="w-full min-h-screen bg-first flex justify-center items-center">
       <motion.div
         initial={{ opacity: 0, y: 50 }}
         animate={{ opacity: 1, y: 0 }}
@@ -60,6 +74,7 @@ const Register = () => {
 
           {/* Form Content */}
           <form onSubmit={handleSubmit} className="space-y-6">
+            {/* Step 1 */}
             {step === 1 && (
               <div>
                 <div className="mb-4">
@@ -92,6 +107,7 @@ const Register = () => {
               </div>
             )}
 
+            {/* Step 2 */}
             {step === 2 && (
               <div>
                 <div className="mb-4">
@@ -121,6 +137,7 @@ const Register = () => {
               </div>
             )}
 
+            {/* Step 3 */}
             {step === 3 && (
               <div>
                 <div>
@@ -166,6 +183,7 @@ const Register = () => {
               </div>
             )}
 
+            {/* Step 4 */}
             {step === 4 && (
               <div>
                 <div>
@@ -207,7 +225,7 @@ const Register = () => {
                   Next
                 </Button>
               ) : (
-                <Button type="submit" variant="default">
+                <Button type="submit" variant="default" disabled={submitting}>
                   {submitting ? <Loader2 className="animate-spin h-5 w-5" /> : "Submit"}
                 </Button>
               )}
@@ -216,12 +234,16 @@ const Register = () => {
 
           {/* Back Home and Login Buttons */}
           <div className="flex justify-between mt-6">
-            <Button variant="ghost" className="flex items-center gap-2">
-              <Home className="w-4 h-4" /> Back Home
-            </Button>
-            <Button variant="ghost" className="flex items-center gap-2">
-              <LogIn className="w-4 h-4" /> Login
-            </Button>
+            <Link href="/">
+              <Button variant="ghost" className="flex items-center gap-2">
+                <Home className="w-4 h-4" /> Back Home
+              </Button>
+            </Link>
+            <Link href="/login/exeat">
+              <Button variant="ghost" className="flex items-center gap-2">
+                <LogIn className="w-4 h-4" /> Login
+              </Button>
+            </Link>
           </div>
         </Card>
       </motion.div>
