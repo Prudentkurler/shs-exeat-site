@@ -19,7 +19,7 @@ const NavBar = () => {
         <div className="w-full h-[60px] bg-first flex items-center justify-between shadow-md px-4">
           {/* Logo */}
           <Link href="/">
-            <h3 className="text-xl text-second font-bold">SHS-EXEAT</h3>
+            <h3 className="text-xl text-second font-bold">EXEAT.COM</h3>
           </Link>
 
           <div className="hidden  md:flex items-center gap-3 text-second font-semibold tex-xl">

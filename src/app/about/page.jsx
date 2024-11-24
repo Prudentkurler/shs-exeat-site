@@ -40,7 +40,7 @@ const AboutPage = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1 }}
         >
-          About SHS-Exeat
+          About Exeat.com
         </motion.h1>
         <motion.p
           className="mt-4 text-lg md:text-xl text-center w-[90%] md:w-[60%]"
