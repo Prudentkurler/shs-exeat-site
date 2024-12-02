@@ -79,6 +79,7 @@ const CreateLoginPage: React.FC = () => {
                     Student Name
                   </label>
                   <Input
+                  required
                     name="studentName"
                     value={formValues.studentName}
                     onChange={handleChange}
@@ -105,6 +106,7 @@ const CreateLoginPage: React.FC = () => {
                     Student PIN
                   </label>
                   <Input
+                  required
                     name="studentPin"
                     value={formValues.studentPin}
                     onChange={handleChange}

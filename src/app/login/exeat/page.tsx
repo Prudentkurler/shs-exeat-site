@@ -154,8 +154,11 @@ const ExeatPage: React.FC = () => {
         <Table className="bg-white shadow rounded-lg">
           <TableHeader>
             <TableRow>
+              <TableHead>Name</TableHead>
+              <TableHead>House</TableHead>
+              <TableHead>Activity</TableHead>
+              <TableHead>Activity</TableHead>
               <TableHead>Sign In</TableHead>
-              <TableHead>Sign Out</TableHead>
               <TableHead>Date</TableHead>
               <TableHead>Time</TableHead>
               <TableHead>Payment</TableHead>

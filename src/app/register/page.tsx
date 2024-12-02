@@ -20,6 +20,47 @@ import Link from "next/link";
 const Register = () => {
   const [step, setStep] = useState(1);
   const [submitting, setSubmitting] = useState(false);
+  const [formData, setFormData] = useState({
+    region: "",
+    school: "",
+    photo: "",
+    name: "",
+    program: "",
+    phone: "",
+    email: "",
+    residence: "",
+    parentName: "",
+    parentPhone: "",
+    parentEmail: "",
+    guardianName: "",
+    guardianPhone: "",
+    guardianEmail: "",
+    yourPhone: "",
+  });
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) =>{
+    setFormData({...formData, [e.target.id]:e.target.value})
+  }
+
+  const validateStep = () => {
+    switch (step) {
+      case 1:
+        return formData.region && formData.school;
+      case 2:
+        return (
+          formData.photo &&
+          formData.name &&
+          formData.program &&
+          formData.phone &&
+          formData.email &&
+          formData.residence
+        );
+      case 3:
+        return formData.parentName && formData.parentPhone && formData.parentEmail;
+      default:
+        return true;
+    }
+  };
   const router = useRouter(); // Initialize the router
 
   const nextStep = (e: React.MouseEvent) => {
@@ -33,14 +74,17 @@ const Register = () => {
   };
 
   const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault(); // Prevent default form submission
-    setSubmitting(true); // Start submission process
+    e.preventDefault();
+    if (!validateStep()) {
+      alert("Please fill in all required fields before submitting.");
+      return;
+    }
 
-    // Simulate an API call or form processing delay
+    setSubmitting(true);
     setTimeout(() => {
-      setSubmitting(false); // End submission process
-      alert("Registration completed!"); // Show alert
-      router.push("/login/exeat"); // Navigate to the login page
+      setSubmitting(false);
+      alert("Registration completed!");
+      router.push("/login/exeat");
     }, 2000);
   };
 
@@ -79,7 +123,7 @@ const Register = () => {
               <div>
                 <div className="mb-4">
                   <Label htmlFor="region">Select Region</Label>
-                  <Select>
+                  <Select required onValueChange={()=>handleInputChange}>
                     <SelectTrigger id="region">
                       <SelectValue placeholder="Choose a region" />
                     </SelectTrigger>
@@ -93,7 +137,7 @@ const Register = () => {
                 </div>
                 <div>
                   <Label htmlFor="school">Select Your School</Label>
-                  <Select>
+                  <Select required  onValueChange={()=>handleInputChange}>
                     <SelectTrigger id="school">
                       <SelectValue placeholder="Choose your school" />
                     </SelectTrigger>
@@ -112,27 +156,27 @@ const Register = () => {
               <div>
                 <div className="mb-4">
                   <Label htmlFor="photo">Upload Photo</Label>
-                  <Input type="file" id="photo" />
+                  <Input required type="file" id="photo" onChange={handleInputChange} />
                 </div>
                 <div>
                   <Label htmlFor="name">Name</Label>
-                  <Input id="name" placeholder="Enter your name" />
+                  <Input required id="name" placeholder="Enter your name" onChange={handleInputChange} />
                 </div>
                 <div>
                   <Label htmlFor="program">Program</Label>
-                  <Input id="program" placeholder="Enter your program" />
+                  <Input required id="program" placeholder="Enter your program" onChange={handleInputChange} />
                 </div>
                 <div>
                   <Label htmlFor="phone">Phone</Label>
-                  <Input id="phone" type="tel" placeholder="Enter your phone" />
+                  <Input required id="phone" type="tel" placeholder="Enter your phone"  onChange={handleInputChange}/>
                 </div>
                 <div>
                   <Label htmlFor="email">Email</Label>
-                  <Input id="email" type="email" placeholder="Enter your email" />
+                  <Input required id="email" type="email" placeholder="Enter your email" onChange={handleInputChange} />
                 </div>
                 <div>
                   <Label htmlFor="residence">Residence</Label>
-                  <Input id="residence" placeholder="Enter your residence" />
+                  <Input required id="residence" placeholder="Enter your residence" onChange={handleInputChange} />
                 </div>
               </div>
             )}
@@ -142,11 +186,13 @@ const Register = () => {
               <div>
                 <div>
                   <Label htmlFor="parentName">Parent Name</Label>
-                  <Input id="parentName" placeholder="Enter parent name" />
+                  <Input required id="parentName" placeholder="Enter parent name" onChange={handleInputChange} />
                 </div>
                 <div>
                   <Label htmlFor="parentPhone">Parent Phone</Label>
                   <Input
+                  onChange={handleInputChange}
+                  required
                     id="parentPhone"
                     type="tel"
                     placeholder="Enter parent phone"
@@ -205,6 +251,7 @@ const Register = () => {
                 <div>
                   <Label htmlFor="guardianPhone">Guardian Phone Number</Label>
                   <Input
+                  
                     id="guardianPhone"
                     type="tel"
                     placeholder="Enter guardian phone number"
@@ -239,7 +286,7 @@ const Register = () => {
                 <Home className="w-4 h-4" /> Back Home
               </Button>
             </Link>
-            <Link href="/login/exeat">
+            <Link href="/login">
               <Button variant="ghost" className="flex items-center gap-2">
                 <LogIn className="w-4 h-4" /> Login
               </Button>
