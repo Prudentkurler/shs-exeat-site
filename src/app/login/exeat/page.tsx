@@ -101,7 +101,7 @@ const ExeatPage: React.FC = () => {
  
 
   return (
-          <Suspense fallback={<div>Loading...</div>}>
+       
             
     <div className="flex flex-col items-center min-h-screen bg-gray-50 py-10 px-4">
       {/* Header Section */}
@@ -255,7 +255,7 @@ const ExeatPage: React.FC = () => {
           <TableBody>
           {history.map((record, index) => (
                 <TableRow key={index} className="hover:bg-gray-100">
-                  <TableCell className="sticky left-0 bg-white z-10">{record.name}</TableCell>
+                  <TableCell className="sticky left-0 bg-white z-10">{name}</TableCell>
                   <TableCell>{record.house}</TableCell>
                   <TableCell>{record.activity}</TableCell>
                   <TableCell>{record.signInMessage}</TableCell>
@@ -281,7 +281,7 @@ const ExeatPage: React.FC = () => {
         </Table>
       </section>
     </div>
-              </Suspense>
+        
   );
 };
 
