@@ -25,6 +25,7 @@ import { pieChartData } from "@/components/comps/chartData";
  // Assuming you have chart components
 import { TrendingUp, TrendingDown, Users, DollarSign } from "lucide-react";
 import { motion } from "framer-motion";
+import { getStudents, students } from "@/actions/serverActions";
 
 export default function Page() {
   const chartData = [
@@ -38,6 +39,12 @@ export default function Page() {
     { id: 3, name: "Alice Brown", status: "Signed In", payment: "Paid" },
     { id: 4, name: "Bob White", status: "Signed Out", payment: "Unpaid" },
   ];
+
+  //get all students
+
+ //const numOfStudents = students.length()
+
+ 
 
   return (
     <SidebarProvider
@@ -79,7 +86,7 @@ export default function Page() {
                 <CardTitle>Students Signed In</CardTitle>
               </CardHeader>
               <CardContent>
-                <h2 className="text-2xl font-bold text-gray-800">120</h2>
+                <h2 className="text-2xl font-bold text-gray-800">110</h2>
               </CardContent>
             </Card>
             <Card className="shadow-md hover:shadow-lg transition">

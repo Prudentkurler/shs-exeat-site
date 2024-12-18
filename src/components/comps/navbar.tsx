@@ -36,7 +36,12 @@ const NavBar = () => {
                 </Link>
                 <Link href="/dashboard" >
                   <div className="flex items-center gap-2">
-                    <LayoutDashboard /> Dashboard
+                    <LayoutDashboard /> 
+                  </div>
+                </Link>
+                <Link href="/super-admin-dashboard" >
+                  <div className="flex items-center gap-2">
+                    <LayoutDashboard /> 
                   </div>
                 </Link>
           </div>
@@ -102,7 +107,19 @@ const NavBar = () => {
                 <Link href="/support" onClick={toggleMenu}>
                   Support
                 </Link>
+                {
+                  pathname.includes('exeat') && (
+                    <Link href="/" onClick={toggleMenu}>
+                      Log out
+                    </Link>
+                  )
+                }
                 <Link href="/dashboard" onClick={toggleMenu}>
+                  <div className="flex items-center gap-2">
+                    <LayoutDashboard /> 
+                  </div>
+                </Link>
+                <Link href="/super-admin-dashboard" onClick={toggleMenu}>
                   <div className="flex items-center gap-2">
                     <LayoutDashboard /> 
                   </div>

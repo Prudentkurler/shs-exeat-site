@@ -5,8 +5,27 @@ import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { motion } from "framer-motion";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+
 
 const CreateLoginPage: React.FC = () => {
+  const router = useRouter();
+  const StudentInfo = [
+    {
+      studentName: "John Doe",
+      studentPin: "1234",
+    },
+    {
+      studentName: "Jane Doe",
+      studentPin: "5678",
+    },
+    {
+      studentName: "Alice Doe",
+      studentPin: "9876",
+    }
+
+  ]
+
   const [formValues, setFormValues] = useState({
     studentName: "",
     studentPin: "",
@@ -44,10 +63,26 @@ const CreateLoginPage: React.FC = () => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (validate()) {
-      console.log("Form submitted:", formValues);
-      // Add logic to save student login details
+      const { studentName, studentPin } = formValues;
+
+      const student = StudentInfo.find(
+        (student) => student.studentName.toLowerCase() === studentName.toLowerCase() && student.studentPin === studentPin
+      );
+
+      if (student) {
+        console.log("Access granted for:", formValues);
+        router.push(`/login/exeat?name=${encodeURIComponent(studentName)}`); // Redirect with name
+      } else {
+        setErrors((prevErrors) => ({
+          ...prevErrors,
+          studentName: "Invalid name or PIN.",
+          studentPin: "Invalid name or PIN.",
+        }));
+      }
     }
   };
+
+
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-blue-500 to-blue-800">
@@ -127,14 +162,14 @@ const CreateLoginPage: React.FC = () => {
 
               {/* Submit Button */}
               <motion.div whileHover={{ scale: 1.05 }} transition={{ type: "spring", stiffness: 200 }}>
-                <Link href="/login/exeat">
+                
                 <Button
                   type="submit"
                   className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-lg shadow-md text-lg font-medium transition duration-200"
                 >
                    Login
                 </Button>
-                </Link>
+               
               </motion.div>
             </form>
           </CardContent>

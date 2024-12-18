@@ -45,6 +45,12 @@ const data: { navMain: NavItem[] } = {
       icon: <MessageCircle />,
     },
     {
+      title: "Add School",
+      url: "/super-admin-dashboard/admin-edit",
+      items: [],
+      icon: <Users />,
+    },
+    {
       title: "Password Management",
       url: "/super-admin-dashboard/password-management",
       items: null,

@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import { useRouter } from "next/navigation"; // Import useRouter
+import { useRouter } from "next/navigation"; 
 import {
   Select,
   SelectTrigger,
@@ -12,18 +12,26 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { Breadcrumb } from "@/components/ui/breadcrumb"; // Breadcrumb component
-import { Loader2, Home, LogIn } from "lucide-react"; // Icons
+import { Breadcrumb } from "@/components/ui/breadcrumb"; 
+import { Loader2, Home, LogIn } from "lucide-react"; 
 import { motion } from "framer-motion";
 import Link from "next/link";
+import { getSchools } from "@/actions/schoolActions";
+
 
 const Register = () => {
+  interface School {
+    id: string;
+    name: string;
+  }
+  
+  const [schools, setSchools] = useState<School[]>([]);
   const [step, setStep] = useState(1);
   const [submitting, setSubmitting] = useState(false);
   const [formData, setFormData] = useState({
     region: "",
     school: "",
-    photo: "",
+    photo: '',
     name: "",
     program: "",
     phone: "",
@@ -38,9 +46,13 @@ const Register = () => {
     yourPhone: "",
   });
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) =>{
-    setFormData({...formData, [e.target.id]:e.target.value})
-  }
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    const { name, value } = e.target;
+    setFormData(prevData => ({
+        ...prevData,
+        [name]: value,
+    }));
+  };
 
   const validateStep = () => {
     switch (step) {
@@ -61,32 +73,109 @@ const Register = () => {
         return true;
     }
   };
-  const router = useRouter(); // Initialize the router
+
+  const router = useRouter(); 
 
   const nextStep = (e: React.MouseEvent) => {
-    e.preventDefault(); // Prevent form submission
-    setStep((prev) => Math.min(prev + 1, 4)); // Increment step (max 4)
+    e.preventDefault(); 
+    setStep((prev) => Math.min(prev + 1, 4)); 
   };
 
   const prevStep = (e: React.MouseEvent) => {
-    e.preventDefault(); // Prevent form submission
-    setStep((prev) => Math.max(prev - 1, 1)); // Decrement step (min 1)
+    e.preventDefault(); 
+    setStep((prev) => Math.max(prev - 1, 1)); 
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
     if (!validateStep()) {
-      alert("Please fill in all required fields before submitting.");
-      return;
+        alert("Please fill in all required fields before submitting.");
+        return;
     }
 
     setSubmitting(true);
-    setTimeout(() => {
-      setSubmitting(false);
-      alert("Registration completed!");
-      router.push("/login/exeat");
-    }, 2000);
-  };
+
+    try {
+        const registrationData = {
+            studentName: formData.name,
+            studentPhone: formData.phone,
+            studentSchool: formData.school, 
+            studentCourse: formData.program,
+            parentName: formData.parentName,
+            parentPhone: formData.parentPhone,
+            parentEmail: formData.parentEmail,
+            guardianName: formData.guardianName,
+            guardianPhone: formData.guardianPhone,
+            guardianEmail: formData.guardianEmail,
+            yourPhone: formData.yourPhone,
+        };
+
+      
+
+        const formPayload = new FormData();
+        formPayload.append('studentName', registrationData.studentName);
+        formPayload.append('studentPhone', registrationData.studentPhone);
+        formPayload.append('studentSchool', registrationData.studentSchool);
+        formPayload.append('studentCourse', registrationData.studentCourse);
+        formPayload.append('parentName', registrationData.parentName);
+        formPayload.append('parentPhone', registrationData.parentPhone);
+        formPayload.append('parentEmail', registrationData.parentEmail);
+        formPayload.append('guardianName', registrationData.guardianName);
+        formPayload.append('guardianPhone', registrationData.guardianPhone);
+        formPayload.append('guardianEmail', registrationData.guardianEmail);
+        formPayload.append('yourPhone', registrationData.yourPhone);
+
+        const response = await fetch('https://schoolexeat.fly.dev/register', {
+            method: 'POST',
+            body: formPayload,
+        });
+
+        if (response) {
+          const id = generateUniqueId();
+          const pin = generatePin();
+            alert(`Registration completed! Your ID is ${id} and your pin is ${pin}`);
+        
+            router.push("/login/exeat");
+        } else {
+            alert("Registration failed. Please try again.");
+        }
+    } catch (error) {
+        console.error('Failed to save data', error);
+        alert("An error occurred. Please try again.");
+    } finally {
+        setSubmitting(false);
+    }
+};
+
+//generate unique id 8 digits
+const generateUniqueId = () => {
+  return Math.floor(10000000 + Math.random() * 90000000).toString();
+};
+
+//generate pin 4 digits
+
+const generatePin = () => {
+  return Math.floor(1000 + Math.random() * 9000).toString();
+};
+
+
+
+
+//get the schools 
+const handleSchools = async()=>{
+
+  try {
+    const res = await getSchools();
+    setSchools(res);
+    const schools = res;
+  } catch (error) {
+    console.error('Failed to fetch schools', error);
+  }
+
+}
+
+handleSchools();
 
   return (
     <div className="w-full min-h-screen bg-first flex justify-center items-center">
@@ -106,7 +195,6 @@ const Register = () => {
             Register
           </motion.h2>
 
-          {/* Breadcrumbs */}
           <Breadcrumb className="mb-6">
             <span>Step {step} of 4</span>
             <span className="mx-2">/</span>
@@ -116,151 +204,128 @@ const Register = () => {
             {step === 4 && <span>ID & Pin Info</span>}
           </Breadcrumb>
 
-          {/* Form Content */}
           <form onSubmit={handleSubmit} className="space-y-6">
-            {/* Step 1 */}
             {step === 1 && (
               <div>
                 <div className="mb-4">
                   <Label htmlFor="region">Select Region</Label>
-                  <Select required onValueChange={()=>handleInputChange}>
+                  <Select name="region" required onValueChange={(value) => setFormData({...formData, region: value})}>
                     <SelectTrigger id="region">
                       <SelectValue placeholder="Choose a region" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="north">North</SelectItem>
-                      <SelectItem value="south">South</SelectItem>
-                      <SelectItem value="east">East</SelectItem>
-                      <SelectItem value="west">West</SelectItem>
+                      <SelectItem value="awa">Ashanti</SelectItem>
+                      <SelectItem value="bgr">Brong-Ahafo</SelectItem>
+                      <SelectItem value="cpt">Central</SelectItem>
+                      <SelectItem value="eastern">Eastern</SelectItem>
+                      <SelectItem value="gt">Greater Accra</SelectItem>
+                      <SelectItem value="northern">Northern</SelectItem>
+                      <SelectItem value="ot">Oti</SelectItem>
+                      <SelectItem value="savanna">Savannah</SelectItem>
+                      <SelectItem value="volta">Volta</SelectItem>
+                      <SelectItem value="western">Western</SelectItem>
+                      <SelectItem value="western-north">Western North</SelectItem>
+                      <SelectItem value="upper-west">Upper West</SelectItem>
+                      <SelectItem value="upper-east">Upper East</SelectItem>
+                      <SelectItem value="north-east">North East</SelectItem>
+                      <SelectItem value="ajua">Ahafo</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
                 <div>
                   <Label htmlFor="school">Select Your School</Label>
-                  <Select required  onValueChange={()=>handleInputChange}>
+                  <Select name="school" value={formData.school} required onValueChange={(value) => setFormData({...formData, school: value})}>
                     <SelectTrigger id="school">
                       <SelectValue placeholder="Choose your school" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="school1">School 1</SelectItem>
-                      <SelectItem value="school2">School 2</SelectItem>
-                      <SelectItem value="school3">School 3</SelectItem>
+                      {schools.map((school) => (
+                        <SelectItem key={school.id} value={school.id}>
+                          {school.name} Anglican
+                        </SelectItem>
+                      ))}
                     </SelectContent>
                   </Select>
+                 
                 </div>
               </div>
             )}
 
-            {/* Step 2 */}
             {step === 2 && (
               <div>
                 <div className="mb-4">
                   <Label htmlFor="photo">Upload Photo</Label>
-                  <Input required type="file" id="photo" onChange={handleInputChange} />
+                  <Input name="photo" required type="file" id="photo" onChange={handleInputChange} />
                 </div>
                 <div>
                   <Label htmlFor="name">Name</Label>
-                  <Input required id="name" placeholder="Enter your name" onChange={handleInputChange} />
+                  <Input name="name" value={formData.name} required id="name" placeholder="Enter your name" onChange={handleInputChange} />
                 </div>
                 <div>
                   <Label htmlFor="program">Program</Label>
-                  <Input required id="program" placeholder="Enter your program" onChange={handleInputChange} />
+                  <Input name="program" value={formData.program} required id="program" placeholder="Enter your program" onChange={handleInputChange} />
                 </div>
                 <div>
                   <Label htmlFor="phone">Phone</Label>
-                  <Input required id="phone" type="tel" placeholder="Enter your phone"  onChange={handleInputChange}/>
+                  <Input name="phone" value={formData.phone} required id="phone" type="tel" placeholder="Enter your phone" onChange={handleInputChange} />
                 </div>
                 <div>
                   <Label htmlFor="email">Email</Label>
-                  <Input required id="email" type="email" placeholder="Enter your email" onChange={handleInputChange} />
+                  <Input name="email" value={formData.email} required id="email" type="email" placeholder="Enter your email" onChange={handleInputChange} />
                 </div>
                 <div>
                   <Label htmlFor="residence">Residence</Label>
-                  <Input required id="residence" placeholder="Enter your residence" onChange={handleInputChange} />
+                  <Input name="residence" value={formData.residence} required id="residence" placeholder="Enter your residence" onChange={handleInputChange} />
                 </div>
               </div>
             )}
 
-            {/* Step 3 */}
             {step === 3 && (
               <div>
                 <div>
                   <Label htmlFor="parentName">Parent Name</Label>
-                  <Input required id="parentName" placeholder="Enter parent name" onChange={handleInputChange} />
+                  <Input name="parentName" value={formData.parentName} required id="parentName" placeholder="Enter parent name" onChange={handleInputChange} />
                 </div>
                 <div>
                   <Label htmlFor="parentPhone">Parent Phone</Label>
-                  <Input
-                  onChange={handleInputChange}
-                  required
-                    id="parentPhone"
-                    type="tel"
-                    placeholder="Enter parent phone"
-                  />
+                  <Input name="parentPhone" value={formData.parentPhone} required id="parentPhone" type="tel" placeholder="Enter parent phone" onChange={handleInputChange} />
                 </div>
                 <div>
                   <Label htmlFor="parentEmail">Parent Email</Label>
-                  <Input
-                    id="parentEmail"
-                    type="email"
-                    placeholder="Enter parent email"
-                  />
+                  <Input name="parentEmail" value={formData.parentEmail} required id="parentEmail" type="email" placeholder="Enter parent email" onChange={handleInputChange} />
                 </div>
                 <div>
                   <Label htmlFor="guardianName">Guardian Name</Label>
-                  <Input id="guardianName" placeholder="Enter guardian name" />
+                  <Input name="guardianName" value={formData.guardianName} id="guardianName" placeholder="Enter guardian name" onChange={handleInputChange} />
                 </div>
                 <div>
                   <Label htmlFor="guardianPhone">Guardian Phone</Label>
-                  <Input
-                    id="guardianPhone"
-                    type="tel"
-                    placeholder="Enter guardian phone"
-                  />
+                  <Input name="guardianPhone" value={formData.guardianPhone} id="guardianPhone" type="tel" placeholder="Enter guardian phone" onChange={handleInputChange} />
                 </div>
                 <div>
                   <Label htmlFor="guardianEmail">Guardian Email</Label>
-                  <Input
-                    id="guardianEmail"
-                    type="email"
-                    placeholder="Enter guardian email"
-                  />
+                  <Input name="guardianEmail" value={formData.guardianEmail} id="guardianEmail" type="email" placeholder="Enter guardian email" onChange={handleInputChange} />
                 </div>
               </div>
             )}
 
-            {/* Step 4 */}
             {step === 4 && (
               <div>
                 <div>
                   <Label htmlFor="yourPhone">Your Phone Number</Label>
-                  <Input
-                    id="yourPhone"
-                    type="tel"
-                    placeholder="Enter your phone number"
-                  />
+                  <Input name="yourPhone" value={formData.yourPhone} id="yourPhone" type="tel" placeholder="Enter your phone number" onChange={handleInputChange} />
                 </div>
                 <div>
                   <Label htmlFor="parentPhone">Parent Phone Number</Label>
-                  <Input
-                    id="parentPhone"
-                    type="tel"
-                    placeholder="Enter parent phone number"
-                  />
+                  <Input name="parentPhone" value={formData.parentPhone} id="parentPhone" type="tel" placeholder="Enter parent phone number" onChange={handleInputChange} />
                 </div>
                 <div>
                   <Label htmlFor="guardianPhone">Guardian Phone Number</Label>
-                  <Input
-                  
-                    id="guardianPhone"
-                    type="tel"
-                    placeholder="Enter guardian phone number"
-                  />
+                  <Input name="guardianPhone" value={formData.guardianPhone} id="guardianPhone" type="tel" placeholder="Enter guardian phone number" onChange={handleInputChange} />
                 </div>
               </div>
             )}
 
-            {/* Navigation Buttons */}
             <div className="flex justify-between mt-6">
               {step > 1 && (
                 <Button variant="secondary" onClick={prevStep}>
@@ -279,7 +344,6 @@ const Register = () => {
             </div>
           </form>
 
-          {/* Back Home and Login Buttons */}
           <div className="flex justify-between mt-6">
             <Link href="/">
               <Button variant="ghost" className="flex items-center gap-2">

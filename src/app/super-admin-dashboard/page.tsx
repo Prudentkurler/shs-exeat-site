@@ -19,13 +19,14 @@ import { Users, UserCheck, UserMinus, DollarSign, MessageCircle } from "lucide-r
 
 const SuperAdminOverviewPage = () => {
   const stats = [
+    { icon: <Users className="text-blue-500" />, title: "Total Schools", value: 3000 },
     { icon: <Users className="text-blue-500" />, title: "Total Students", value: 3000 },
     { icon: <UserCheck className="text-green-500" />, title: "Signed In", value: 2200 },
     { icon: <UserMinus className="text-yellow-500" />, title: "Signed Out", value: 800 },
-    { icon: <DollarSign className="text-teal-500" />, title: "Paid Students", value: 2500 },
-    { icon: <DollarSign className="text-red-500" />, title: "Unpaid Students", value: 500 },
+    { icon: <DollarSign className="text-teal-500" />, title: "Paid ", value: 2500 },
+    { icon: <DollarSign className="text-red-500" />, title: "Unpaid ", value: 500 },
     { icon: <DollarSign className="text-green-600" />, title: "Total Revenue", value: "$150,000" },
-  ];
+  ]; 
 
   const smsParentList = [
     { id: 1, school: "St. Albans", parentCount: 200 },
@@ -53,16 +54,16 @@ const SuperAdminOverviewPage = () => {
           </Breadcrumb>
         </header>
 
-        <div className="p-6 space-y-6">
+        <div className=" w-full">
           {/* Stats Section */}
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.6 }}
-            className="flex flex-col md:flex-row items-center gap-4"
+            className="flex w-full  flex-col md:flex-row items-center p-4 gap-4"
           >
             {stats.map((stat, index) => (
-              <Card key={index} className="w-full">
+              <Card key={index} className="w-full md:min-w-[300px] ">
                 <CardHeader>
                   <CardTitle className="flex items-center gap-2 text-gray-600">
                     {stat.icon}
@@ -81,7 +82,7 @@ const SuperAdminOverviewPage = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
-            className="p-4 bg-white rounded-md shadow-md"
+            className="p-4 bg-white w-full mt-5 rounded-md shadow-md"
           >
             <h3 className="text-lg font-semibold text-gray-700 mb-4">
               SMS to Parent List
