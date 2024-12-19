@@ -34,16 +34,7 @@ const NavBar = () => {
                 <Link href="/support" >
                   Support
                 </Link>
-                <Link href="/dashboard" >
-                  <div className="flex items-center gap-2">
-                    <LayoutDashboard /> 
-                  </div>
-                </Link>
-                <Link href="/super-admin-dashboard" >
-                  <div className="flex items-center gap-2">
-                    <LayoutDashboard /> 
-                  </div>
-                </Link>
+              
           </div>
 
           {/* Menu Icon */}
@@ -114,16 +105,7 @@ const NavBar = () => {
                     </Link>
                   )
                 }
-                <Link href="/dashboard" onClick={toggleMenu}>
-                  <div className="flex items-center gap-2">
-                    <LayoutDashboard /> 
-                  </div>
-                </Link>
-                <Link href="/super-admin-dashboard" onClick={toggleMenu}>
-                  <div className="flex items-center gap-2">
-                    <LayoutDashboard /> 
-                  </div>
-                </Link>
+           
         </div>
               </nav>
             </motion.div>
