@@ -13,26 +13,26 @@ import { useRouter, useSearchParams } from "next/navigation";
 interface HistoryRecord {
   name: string;
   house: number;
-  activity: string;
-  signInMessage: string;
-  signOut: string | null; // Tracks sign-out completion
+  activity: 'check-in' | 'check-out';
+  Reason: string;
+  feedback: string;
   date: string;
+  time: string;
 }
 const ExeatPage: React.FC = () => {
   const [currentSection, setCurrentSection] = useState("welcome");
   const [feedback, setFeedback] = useState("");
   const [message, setMessage] = useState("");
-  const [sCurrentSection, setSCurrentSection] = useState("signIn");
-  const [activity, setActivity] = useState("");
-  const [signInMessage, setSignInMessage] = useState("");
+
   const [history, setHistory] = useState<HistoryRecord[]>([
     {
       name: "Gal Gaddot",
       house: 2,
-      activity: "Sick",
-      signInMessage: "Going for a checkup.",
-      signOut: null,
+      activity: "check-in",
+      Reason: "Going for a checkup.",
+      feedback: "My ward reported late.",
       date: "2024-11-10",
+      time: "4:00pm",
     },
   ]);
   const [currentName] = useState("John Doe");
@@ -67,38 +67,7 @@ const ExeatPage: React.FC = () => {
   const searchParams = useSearchParams();
   const name = searchParams.get('name')?.toUpperCase();
 
-  // Handles Sign-In
-  const handleSignIn = () => {
-    if (!activity.trim() || !signInMessage.trim()) {
-      alert("Please fill in all fields before signing in.");
-      return;
-    }
-    const newRecord: HistoryRecord = {
-      name:currentName,
-      house: currentHouse,
-      activity,
-      signInMessage,
-      signOut: null,
-      date: new Date().toLocaleDateString(),
-    };
-    setHistory([...history, newRecord]);
-    setActivity("");
-    setSignInMessage("");
-    alert("Sign-in completed!");
-  };
-
-  // Handles Sign-Out
-  const handleSignOut = (index: number) => {
-    const updatedHistory = [...history];
-    if (updatedHistory[index].signOut) {
-      alert("This record has already been signed out.");
-      return;
-    }
-    updatedHistory[index].signOut = new Date().toLocaleTimeString();
-    setHistory(updatedHistory);
-    alert("Sign-out completed!");
-  };
- 
+  
 
   return (
        
@@ -157,7 +126,7 @@ const ExeatPage: React.FC = () => {
             <h2 className="text-gray-700 text-lg font-medium mb-3">Pay Charge Fee</h2>
             <div className="flex items-center space-x-4">
               <Input
-                value="50.00"
+                value="15.00"
                 readOnly
                 className="w-1/2 bg-gray-100 text-gray-500 cursor-not-allowed"
               />
@@ -208,31 +177,7 @@ const ExeatPage: React.FC = () => {
           </Card>
         )}
 
-{sCurrentSection === "signIn" && (
-          <Card className="rounded-lg shadow-lg border bg-white">
-            <CardHeader className="bg-[#4567b7] text-white py-4 rounded-t-lg">
-              <CardTitle className="text-lg font-bold">Sign In</CardTitle>
-            </CardHeader>
-            <CardContent className="p-6 space-y-4">
-              <Input
-                placeholder="Enter activity or reason (e.g., Going home)"
-                value={activity}
-                onChange={(e) => setActivity(e.target.value)}
-              />
-              <Textarea
-                placeholder="Leave a message for your parent"
-                value={signInMessage}
-                onChange={(e) => setSignInMessage(e.target.value)}
-                />
-              <Button
-                onClick={handleSignIn}
-                className="bg-[#4567b7] text-white hover:bg-[#3458a4]"
-                >
-                Sign In
-              </Button>
-            </CardContent>
-          </Card>
-        )}
+
       </motion.div>
 
       {/* History Section */}
@@ -241,14 +186,14 @@ const ExeatPage: React.FC = () => {
         <Table className="bg-white shadow rounded-lg">
           <TableHeader>
             <TableRow>
-              <TableHead className="sticky left-0 z-10 bg-white">Name</TableHead>
-              <TableHead>House</TableHead>
+              <TableHead className="sticky left-0 z-10 bg-white">Student Name</TableHead>
+              <TableHead>House No.</TableHead>
               <TableHead>Activity</TableHead>
-              <TableHead>Sign In</TableHead>
+              <TableHead>Reason</TableHead>
               <TableHead>Date</TableHead>
               <TableHead>Time</TableHead>
-              <TableHead>Payment</TableHead>
-              <TableHead>Sign Out</TableHead>
+              <TableHead>Feedback</TableHead>
+             
               
             </TableRow>
           </TableHeader>
@@ -258,22 +203,14 @@ const ExeatPage: React.FC = () => {
                   <TableCell className="sticky left-0 bg-white z-10">{name}</TableCell>
                   <TableCell>{record.house}</TableCell>
                   <TableCell>{record.activity}</TableCell>
-                  <TableCell>{record.signInMessage}</TableCell>
+                  <TableCell>{record.Reason}</TableCell>
                   <TableCell>{record.date}</TableCell>
-                  <TableCell>{record.signOut || "Not Signed Out"}</TableCell>
-                  <TableCell>Paid</TableCell>
+                  <TableCell>{record.time}</TableCell>
+                 
+                  <TableCell>{record.feedback}</TableCell>
                   <TableCell>
-                    <Button
-                      onClick={() => handleSignOut(index)}
-                      disabled={!!record.signOut}
-                      className={`${
-                        record.signOut
-                          ? "bg-gray-400 text-gray-700 cursor-not-allowed"
-                          : "bg-[#4567b7] text-white hover:bg-[#3458a4]"
-                      }`}
-                      >
-                      {record.signOut ? "Signed Out" : "Sign Out"}
-                    </Button>
+
+                   
                   </TableCell>
                 </TableRow>
               ))}

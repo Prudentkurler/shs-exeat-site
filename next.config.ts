@@ -7,6 +7,8 @@ const nextConfig: NextConfig = {
   },
   // Enabling React Strict Mode
   reactStrictMode: true,
+  experimental: {
+  },
 
 
  

@@ -9,8 +9,12 @@ import Footer from "@/components/comps/footer";
 import Link from "next/link";
 import {motion} from 'framer-motion'
 
+
 const Page = () => {
   const [showScrollToTop, setShowScrollToTop] = useState(false);
+ 
+
+
 
   useEffect(() => {
     const handleScroll = () => {
@@ -124,20 +128,20 @@ const Page = () => {
           {[
             {
               icon: <BadgeCheck className="h-8 w-8" />,
-              title: "Register and Select Your School",
-              description: "Create an account and connect to your school for easy management.",
+              title: " Select Your School and Register ",
+              description: "Create an account and connect with your wards school",
               bgColor: "bg-blue-500",
             },
             {
               icon: <LogIn className="h-8 w-8" />,
               title: "Login and Manage Your Details",
-              description: "Update your profile, sign in/out, and leave important messages.",
+              description: "Check your wards' check-in and out date and time. You can also leave feedbacks to school.",
               bgColor: "bg-green-500",
             },
             {
               icon: <TrendingUp className="h-8 w-8" />,
-              title: "Track Attendance and Payments",
-              description: "Stay informed about attendance and payment records in real-time.",
+              title: "Track  Your Ward's Progress",
+              description: "Get in touch with your wards school, individual teachers.",
               bgColor: "bg-yellow-500",
             },
           ].map((step, index) => (

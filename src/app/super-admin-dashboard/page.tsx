@@ -18,6 +18,8 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { Users, UserCheck, UserMinus, DollarSign, MessageCircle } from "lucide-react";
 
 const SuperAdminOverviewPage = () => {
+  
+
   const stats = [
     { icon: <Users className="text-blue-500" />, title: "Total Schools", value: 3000 },
     { icon: <Users className="text-blue-500" />, title: "Total Students", value: 3000 },

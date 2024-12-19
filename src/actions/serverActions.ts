@@ -2,59 +2,7 @@
     import {RegistrationInfo} from '@/Interface/Interface'
 
 
-    export const registerUser = async (data: FormData)=>{
-        const name = data.get('name')?.toString()
-        const email = data.get('email')?.toString()
-        const password = data.get('password')?.toString()
-        const phone = data.get('phone')?.toString()
-        const address = data.get('address')?.toString()
-        const studentSchool = data.get('studentSchool')?.toString()
-        const studentCourse = data.get('studentCourse')?.toString()
-        const parentName = data.get('parentName')?.toString()
-        const parentPhone = data.get('parentPhone')?.toString()
-        const parentEmail = data.get('parentEmail')?.toString()
-        const guardianName = data.get('guardianName')?.toString()
-        const guardianPhone = data.get('guardianPhone')?.toString()
-        const guardianEmail = data.get('guardianEmail')?.toString()
-        const yourPhone = data.get('yourPhone')?.toString()
 
-        if(!name || !email || !password || !phone || !address || !studentSchool || !studentCourse || !parentName || !parentPhone || !parentEmail || !guardianName || !guardianPhone || !guardianEmail || !yourPhone){
-            return
-        }
-
-        const registrationData:RegistrationInfo = {
-            studentName: name,
-            studentAge: data.get('studentAge')?.toString() || '',
-            studentPhone: phone,
-            studentSchool: studentSchool,
-            studentCourse: studentCourse,
-            parentName: parentName,
-            parentPhone: parentPhone,
-            parentEmail: parentEmail,
-            guardianName: guardianName,
-            guardianPhone: guardianPhone,
-            guardianEmail: guardianEmail,
-            yourPhone: yourPhone
-        }
-
-
-
-        try {
-            const response = await fetch('https://schoolexeat.fly.dev/student/',
-            {
-                method:'POST',
-                headers:{'Content-Type':'application/json'},
-                body:JSON.stringify(registrationData)
-            }
-            )
-            if(!response.ok){
-                throw new Error('Failed to save data')
-            }
-            return response.json()
-        } catch (error) {
-            console.log(error)
-        }
-    }
 
     //getallstudents
     export const getStudents = async()=>{
